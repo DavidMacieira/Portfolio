@@ -167,7 +167,7 @@ export default function Hero() {
                   </a>
 
                   <a
-                    href="O_TEU_LINKEDIN"
+                    href="https://www.linkedin.com/in/david-macieira-5791a2321/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
