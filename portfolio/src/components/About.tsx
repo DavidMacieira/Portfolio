@@ -5,14 +5,20 @@ const education = [
   {
     date: "2024 — PRESENTE",
     type: "FORMAÇÃO",
-    title: "Desenvolvimento de Software",
-    institution: "Instituto Politécnico do Cávado e do Ave",
+    title: "Desenvolvimento Web e Multimédia",
+    institution: "Universidade Politécnica do Cávado e do Ave",
   },
   {
-    date: "2027",
+    date: "2023",
     type: "ESTÁGIO",
-    title: "Estágio Curricular",
-    institution: "Procura de oportunidade profissional",
+    title: "Estágio Curricular - GIGASTORE",
+    institution: "Estágio na Gigastore",
+  },
+    {
+    date: "2023",
+    type: "ESTÁGIO",
+    title: "Estágio Curricular - FRICON",
+    institution: "Estágio na Fricon",
   },
 ];
 
@@ -78,7 +84,17 @@ export default function About() {
               </div>
               <div>
                 <h3>Git & GitHub</h3>
-                <p>Adicionar plataforma e certificação</p>
+                <p>Curso Microsoft - Em processo</p>
+              </div>
+            </article>
+                        <article className="education-item">
+              <div>
+                <span>2026</span>
+                <small>CURSO</small>
+              </div>
+              <div>
+                <h3>Wall Street English</h3>
+                <p>Curso de Inglês</p>
               </div>
             </article>
           </div>
