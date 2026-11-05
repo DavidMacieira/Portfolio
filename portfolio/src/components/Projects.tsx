@@ -1,37 +1,40 @@
 
 import { motion } from "framer-motion";
+import barbeariaImage from "../assets/barbearia.png";
+import restauranteImage from "../assets/Restaurante.png";
+import waveImage from "../assets/wave.ia.png";
 
 const projects = [
   {
     number: "01",
     category: "WEB APP",
-    name: "Macieira",
+    name: "Restaurante",
     description:
       "Plataforma digital para um restaurante português, com menu, reservas e gestão administrativa.",
-    technologies: ["React", "Node.js", "MongoDB"],
-    image: "/projects/macieira.png",
+    technologies: ["React", "JavaScript", "HTML", "CSS"],
+    image: restauranteImage,
     github: "https://github.com/DavidMacieira",
     demo: "#",
   },
   {
     number: "02",
     category: "WEB DEVELOPMENT",
-    name: "WaveStudio",
+    name: "Loja Online - Proof",
     description:
       "Identidade digital para um estúdio criativo focado em desenvolvimento web e comunicação visual.",
     technologies: ["React", "TypeScript", "Tailwind"],
-    image: "/projects/wavestudio.png",
+    image: waveImage,
     github: "https://github.com/DavidMacieira/wave-studio",
     demo: "#",
   },
   {
     number: "03",
-    category: "WEB APP",
-    name: "App Arquitetura",
+    category: "Website",
+    name: "Barbearia João Angeiras",
     description:
       "Aplicação de organização académica com calendário, tarefas e gestão de horários.",
-    technologies: ["React", "TypeScript", "Supabase"],
-    image: "/projects/arquitetura.png",
+    technologies: ["Html", "Css", "JavaScript", "API - Google App Script", "Google Sheets - Guardar os dados"],
+    image: barbeariaImage,
     github: "#",
     demo: "#",
   },
