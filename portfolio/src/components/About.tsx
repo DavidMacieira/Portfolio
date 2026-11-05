@@ -1,5 +1,6 @@
 
 import { motion } from "framer-motion";
+import type { Language } from "../types";
 
 const education = [
   {
@@ -37,7 +38,8 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-export default function About() {
+export default function About({ language }: { language: Language }) {
+  const english = language === "en";
   return (
     <section className="about-section" id="about">
       <div className="about-grid">
@@ -59,18 +61,17 @@ export default function About() {
             className="eyebrow"
             variants={itemVariants}
           >
-            (03) SOBRE
+            (03) {english ? "ABOUT" : "SOBRE"}
           </motion.span>
 
           <motion.h2 variants={itemVariants}>
-            Da ideia à
+            {english ? "From idea to" : "Da ideia à"}
             <br />
-            <em>implementação.</em>
+            <em>{english ? "implementation." : "implementação."}</em>
           </motion.h2>
 
           <motion.p variants={itemVariants}>
-            Gosto de acompanhar um projeto desde a primeira
-            ideia até à sua concretização.
+            {english ? "I enjoy following a project from its first idea through to completion." : "Gosto de acompanhar um projeto desde a primeira ideia até à sua concretização."}
           </motion.p>
 
           <motion.p variants={itemVariants}>
@@ -101,7 +102,7 @@ export default function About() {
             whileHover={{ y: -4 }}
             whileTap={{ scale: 0.97 }}
           >
-            Descarregar CV <span>↗</span>
+            {english ? "Download CV" : "Descarregar CV"} <span>→</span>
           </motion.a>
         </motion.div>
 

@@ -1,5 +1,6 @@
 
 import { motion } from "framer-motion";
+import type { Language } from "../types";
 
 const skills = [
   {
@@ -101,20 +102,20 @@ function DatabaseIcon() {
   );
 }
 
-export default function Skills() {
+export default function Skills({ language }: { language: Language }) {
+  const english = language === "en";
   return (
     <section className="skills-section" id="skills">
       <div className="section-container">
         <div className="skills-heading">
-          <span className="eyebrow">(02) COMPETÊNCIAS</span>
+          <span className="eyebrow">(02) {english ? "SKILLS" : "COMPETÊNCIAS"}</span>
 
           <h2 className="section-title">
-            Do frontend ao <em>backend.</em>
+            {english ? "From frontend to " : "Do frontend ao "}<em>backend.</em>
           </h2>
 
           <p className="skills-intro">
-            Tecnologias e ferramentas com que tenho trabalhado
-            ao longo do meu percurso.
+            {english ? "Technologies and tools I have worked with throughout my journey." : "Tecnologias e ferramentas com que tenho trabalhado ao longo do meu percurso."}
           </p>
         </div>
 

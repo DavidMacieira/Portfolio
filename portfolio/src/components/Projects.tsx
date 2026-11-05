@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import barbeariaImage from "../assets/barbearia.png";
 import restauranteImage from "../assets/Restaurante.png";
 import waveImage from "../assets/wave.ia.png";
+import type { Language } from "../types";
 
 const projects = [
   {
@@ -40,21 +41,22 @@ const projects = [
   },
 ];
 
-export default function Projects() {
+export default function Projects({ language }: { language: Language }) {
+  const english = language === "en";
   return (
     <section className="projects-section" id="projects">
       <div className="projects-heading">
         <div>
-          <span className="eyebrow">(01) PROJETOS</span>
+          <span className="eyebrow">(01) {english ? "PROJECTS" : "PROJETOS"}</span>
           <h2>
-            Trabalho
+            {english ? "Selected" : "Trabalho"}
             <br />
-            <em>selecionado.</em>
+            <em>{english ? "work." : "selecionado."}</em>
           </h2>
         </div>
 
         <p>
-          Uma seleção de projetos onde juntei frontend, backend e bases de dados.
+          {english ? "A selection of projects combining frontend, backend and databases." : "Uma seleção de projetos onde juntei frontend, backend e bases de dados."}
         </p>
       </div>
 
@@ -85,7 +87,7 @@ export default function Projects() {
               </div>
 
               <div className="project-links">
-                <a href={project.github} target="_blank" rel="noreferrer">Código ↗</a>
+                <a href={project.github} target="_blank" rel="noreferrer">{english ? "Code" : "Código"} →</a>
                 <a href={project.demo} target="_blank" rel="noreferrer">Demo ↗</a>
               </div>
             </div>
@@ -103,7 +105,7 @@ export default function Projects() {
       </div>
 
       <a href="https://github.com/DavidMacieira" target="_blank" rel="noreferrer" className="more-projects">
-        Ver mais projetos <span>↗</span>
+        {english ? "See more projects" : "Ver mais projetos"} <span>→</span>
       </a>
     </section>
   );

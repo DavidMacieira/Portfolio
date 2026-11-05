@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import heroImage from "../assets/hero.png";
+import type { Language } from "../types";
 
 
 const textVariants = {
@@ -21,16 +22,21 @@ const itemVariants = {
   },
 };
 
-export default function Hero() {
+function ArrowIcon() {
+  return <svg className="button-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>;
+}
+
+export default function Hero({ language, setLanguage }: { language: Language; setLanguage: (language: Language) => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const english = language === "en";
 
   const closeMenu = () => setMenuOpen(false);
 
   const links = [
-    { number: "01", label: "Projetos", href: "#projects" },
-    { number: "02", label: "Competências", href: "#skills" },
-    { number: "03", label: "Sobre", href: "#about" },
-    { number: "04", label: "Contacto", href: "#contact" },
+    { number: "01", label: english ? "Projects" : "Projetos", href: "#projects" },
+    { number: "02", label: english ? "Skills" : "Competências", href: "#skills" },
+    { number: "03", label: english ? "About" : "Sobre", href: "#about" },
+    { number: "04", label: english ? "Contact" : "Contacto", href: "#contact" },
   ];
 
   return (
@@ -45,10 +51,7 @@ export default function Hero() {
         </a>
 
         <div className="nav-links">
-          <a href="#projects">Projetos</a>
-          <a href="#skills">Competências</a>
-          <a href="#about">Sobre</a>
-          <a href="#contact">Contacto</a>
+          {links.map((link) => <a href={link.href} key={link.number}>{link.label}</a>)}
         </div>
 
         <div className="nav-actions">
@@ -82,15 +85,19 @@ export default function Hero() {
           </a>
 
           <a href="#contact" className="nav-contact">
-            Vamos conversar <span>↗</span>
+            {english ? "Let's talk" : "Vamos conversar"} <ArrowIcon />
           </a>
+          <div className="language-switcher" aria-label="Language">
+            <button className={language === "pt" ? "active" : ""} onClick={() => setLanguage("pt")}>PT</button>
+            <button className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")}>EN</button>
+          </div>
         </div>
 
         <button
           type="button"
           className={`mobile-menu-button ${menuOpen ? "active" : ""}`}
           onClick={() => setMenuOpen((previous) => !previous)}
-          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+          aria-label={menuOpen ? (english ? "Close menu" : "Fechar menu") : (english ? "Open menu" : "Abrir menu")}
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
         >
@@ -121,7 +128,7 @@ export default function Hero() {
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <div className="mobile-menu-heading">
-                <span>MENU</span>
+                <span>{english ? "MENU" : "MENU"}</span>
                 <span>01 — 04</span>
               </div>
 
@@ -134,7 +141,7 @@ export default function Hero() {
                   >
                     <span>{link.number}</span>
                     {link.label}
-                    <span className="menu-arrow">↗</span>
+                    <ArrowIcon />
                   </a>
                 ))}
               </div>
@@ -146,7 +153,7 @@ export default function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    GitHub ↗
+                    GitHub
                   </a>
 
                   <a
@@ -154,12 +161,12 @@ export default function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    LinkedIn ↗
+                    LinkedIn
                   </a>
                 </div>
 
                 <a href="/cv.pdf" className="mobile-cv-button" download>
-                  Descarregar CV <span>↓</span>
+                  {english ? "Download CV" : "Descarregar CV"} <ArrowIcon />
                 </a>
               </div>
             </motion.div>
@@ -180,19 +187,16 @@ export default function Hero() {
           />
 
           <motion.h1 variants={itemVariants}>
-            Transformo ideias em
+            {english ? "I turn ideas into" : "Transformo ideias em"}
             <br />
-            <em>experiências digitais.</em>
+            <em>{english ? "digital experiences." : "experiências digitais."}</em>
           </motion.h1>
 
           <motion.p
             className="hero-description"
             variants={itemVariants}
           >
-            Sou o David, desenvolvedor de software com interesse em criar
-            aplicações e websites modernos, funcionais e intuitivos.
-            Gosto de acompanhar cada projeto desde a ideia inicial até
-            à implementação.
+            {english ? "I'm David, a software developer interested in building modern, functional and intuitive applications and websites. I enjoy following each project from the first idea through to implementation." : "Sou o David, desenvolvedor de software com interesse em criar aplicações e websites modernos, funcionais e intuitivos. Gosto de acompanhar cada projeto desde a ideia inicial até à implementação."}
           </motion.p>
 
           <motion.div
@@ -203,14 +207,14 @@ export default function Hero() {
               href="#projects"
               className="button-primary hero-redesign-button"
             >
-              Ver projetos <span>→</span>
+              {english ? "View projects" : "Ver projetos"} <ArrowIcon />
             </a>
 
             <a
               href="#contact"
               className="button-outline hero-redesign-button"
             >
-              Contactar
+              {english ? "Get in touch" : "Contactar"} <ArrowIcon />
             </a>
           </motion.div>
 
@@ -222,7 +226,7 @@ export default function Hero() {
             <span className="hero-scroll-mouse">
               <i />
             </span>
-            <span>SCROLL PARA EXPLORAR</span>
+            <span>{english ? "SCROLL TO EXPLORE" : "SCROLL PARA EXPLORAR"}</span>
           </motion.a>
         </motion.div>
 
