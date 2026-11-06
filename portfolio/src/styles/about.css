@@ -1,1 +1,283 @@
-.about-section{max-width:1440px;margin:auto;padding:120px clamp(20px,6vw,96px)}.about-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(50px,10vw,150px)}.about-text h2,.journey-block h2{margin:20px 0 24px;font-size:clamp(2.55rem,4vw,4rem);line-height:.96;letter-spacing:-.07em}.about-text h2 em,.journey-block h2 em{color:var(--accent)}.about-text>p{max-width:510px;margin-bottom:17px;color:var(--muted);font-size:.94rem;line-height:1.75}.about-text .button-primary{margin-top:16px}.about-journey{display:grid;gap:62px}.journey-block h2{font-size:clamp(2rem,3vw,3rem)}.education-list,.experience-list{border-top:1px solid var(--line)}.journey-item{display:grid;grid-template-columns:24px 1fr;gap:16px;padding:22px 0;border-bottom:1px solid var(--line);transition:padding-left .25s}.journey-item:hover{padding-left:7px}.journey-marker{padding-top:6px}.journey-marker span{display:block;width:9px;height:9px;border:2px solid var(--accent);border-radius:50%;background:var(--ink)}.journey-item small{display:block;margin-bottom:7px;color:var(--accent);font-size:.63rem;font-weight:700;letter-spacing:.1em}.journey-item h3{font-size:1.05rem;letter-spacing:-.03em}.journey-item p{margin-top:5px;color:var(--muted);font-size:.8rem;line-height:1.5}@media(max-width:800px){.about-section{padding-block:80px}.about-grid{grid-template-columns:1fr;gap:70px}.about-journey{gap:55px}}
+
+/* =========================================
+   ABOUT SECTION
+========================================= */
+
+.about-section {
+  max-width: 1440px;
+  margin: auto;
+  padding: 120px clamp(20px, 6vw, 96px);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1.1fr);
+
+  gap: clamp(50px, 8vw, 120px);
+  align-items: start;
+}
+
+/* =========================================
+   ABOUT TEXT
+========================================= */
+
+.about-text {
+  position: relative;
+  max-width: 540px;
+}
+
+.about-text h2,
+.journey-block h2 {
+  margin: 20px 0 26px;
+
+  font-size: clamp(2.55rem, 4vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.07em;
+}
+
+.about-text h2 em,
+.journey-block h2 em {
+  color: var(--accent);
+}
+
+.about-text > p {
+  max-width: 510px;
+  margin-bottom: 17px;
+
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.8;
+}
+
+.about-text .button-primary {
+  margin-top: 16px;
+}
+
+/* =========================================
+   JOURNEY LAYOUT
+========================================= */
+
+.about-journey {
+  display: grid;
+  gap: 65px;
+}
+
+.journey-block {
+  min-width: 0;
+}
+
+.journey-block h2 {
+  font-size: clamp(2rem, 3vw, 3rem);
+  margin-bottom: 24px;
+}
+
+/* =========================================
+   EDUCATION & EXPERIENCE LISTS
+========================================= */
+
+.education-list,
+.experience-list {
+  position: relative;
+  border-top: 1px solid var(--line);
+}
+
+.journey-item {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 16px;
+
+  padding: 22px 0;
+
+  border-bottom: 1px solid var(--line);
+
+  transition:
+    padding-left 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.journey-item:hover {
+  padding-left: 7px;
+  border-bottom-color:
+    color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+/* =========================================
+   JOURNEY MARKERS
+========================================= */
+
+.journey-marker {
+  padding-top: 6px;
+}
+
+.journey-marker span {
+  position: relative;
+
+  display: block;
+  width: 9px;
+  height: 9px;
+
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+
+  background: var(--ink);
+
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.journey-item:hover .journey-marker span {
+  background: var(--accent);
+  box-shadow: 0 0 12px
+    color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* =========================================
+   JOURNEY CONTENT
+========================================= */
+
+.journey-item-content {
+  min-width: 0;
+}
+
+.journey-item small {
+  display: block;
+  margin-bottom: 7px;
+
+  color: var(--accent);
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+}
+
+.journey-item h3 {
+  font-size: 1.05rem;
+  letter-spacing: -0.03em;
+  line-height: 1.4;
+}
+
+.journey-item p {
+  margin-top: 6px;
+
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+/* =========================================
+   EXPERIENCE TAGS
+========================================= */
+
+.experience-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+
+  margin-top: 13px;
+}
+
+.experience-tags span {
+  padding: 5px 9px;
+
+  border: 1px solid var(--line);
+  border-radius: 99px;
+
+  color: var(--muted);
+  font-size: 0.63rem;
+  font-weight: 500;
+
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.experience-item:hover .experience-tags span {
+  border-color: #d7ff3f45;
+  color: var(--paper);
+}
+
+/* =========================================
+   EDUCATION HIGHLIGHT
+========================================= */
+
+.education-item:first-child h3 {
+  color: var(--paper);
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+  }
+
+  .about-text h2 {
+    font-size: clamp(2.3rem, 4vw, 3.2rem);
+  }
+
+  .journey-block h2 {
+    font-size: clamp(1.9rem, 3vw, 2.5rem);
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+  .about-section {
+    padding-block: 80px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 65px;
+  }
+
+  .about-text {
+    max-width: 100%;
+  }
+
+  .about-text h2 {
+    font-size: clamp(2.6rem, 10vw, 3.5rem);
+    margin-top: 18px;
+  }
+
+  .about-text > p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .about-journey {
+    gap: 55px;
+  }
+
+  .journey-block h2 {
+    font-size: clamp(2rem, 8vw, 2.7rem);
+  }
+
+  .journey-item {
+    padding-block: 20px;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-item,
+  .journey-marker span,
+  .experience-tags span {
+    transition: none !important;
+  }
+}

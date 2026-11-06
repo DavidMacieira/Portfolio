@@ -192,12 +192,16 @@ export default function Hero({ language, setLanguage }: { language: Language; se
             <em>{english ? "digital experiences." : "experiências digitais."}</em>
           </motion.h1>
 
-          <motion.p
-            className="hero-description"
-            variants={itemVariants}
-          >
-            {english ? "I'm David, a software developer interested in building modern, functional and intuitive applications and websites. I enjoy following each project from the first idea through to implementation." : "Sou o David, desenvolvedor de software com interesse em criar aplicações e websites modernos, funcionais e intuitivos. Gosto de acompanhar cada projeto desde a ideia inicial até à implementação."}
-          </motion.p>
+
+<motion.p
+  className="hero-description"
+  variants={itemVariants}
+>
+  {english
+    ? "I'm David, a Web Development and Multimedia student passionate about technology and digital creation. I enjoy turning ideas into functional solutions, developing websites and applications from concept to implementation."
+    : "Sou o David, estudante de Desenvolvimento Web e Multimédia, apaixonado por tecnologia e criação digital. Gosto de transformar ideias em soluções funcionais, desenvolvendo websites e aplicações desde a conceção até à implementação."}
+</motion.p>
+
 
           <motion.div
             className="hero-actions"

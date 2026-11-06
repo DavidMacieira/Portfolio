@@ -1,13 +1,19 @@
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { Language } from "../types";
 
 const skills = [
   {
     number: "01",
     icon: "</>",
-    title: "Frontend",
-    description: "Interfaces modernas, responsivas e intuitivas.",
+    title: {
+      pt: "Frontend",
+      en: "Frontend",
+    },
+    description: {
+      pt: "Interfaces modernas, responsivas e intuitivas.",
+      en: "Modern, responsive and intuitive interfaces.",
+    },
     technologies: [
       {
         name: "HTML",
@@ -34,8 +40,14 @@ const skills = [
   {
     number: "02",
     icon: "{ }",
-    title: "Backend",
-    description: "Lógica, programação e desenvolvimento de aplicações.",
+    title: {
+      pt: "Backend",
+      en: "Backend",
+    },
+    description: {
+      pt: "Lógica, programação e desenvolvimento de aplicações.",
+      en: "Logic, programming and application development.",
+    },
     technologies: [
       {
         name: "Node.js",
@@ -58,8 +70,14 @@ const skills = [
   {
     number: "03",
     icon: ">_",
-    title: "Bases de dados",
-    description: "Organização, armazenamento e gestão de informação.",
+    title: {
+      pt: "Bases de dados",
+      en: "Databases",
+    },
+    description: {
+      pt: "Organização, armazenamento e gestão de informação.",
+      en: "Data organization, storage and management.",
+    },
     technologies: [
       {
         name: "MongoDB",
@@ -73,9 +91,59 @@ const skills = [
   },
 ];
 
+const gridVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.16,
+    },
+  },
+};
+
 const cardVariants = {
-  hidden: { opacity: 0, y: 35 },
-  visible: { opacity: 1, y: 0 },
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1] as const,
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 18,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  },
+};
+
+const technologyVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.85,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.35,
+      ease: "easeOut" as const,
+    },
+  },
 };
 
 function DatabaseIcon() {
@@ -84,15 +152,23 @@ function DatabaseIcon() {
       viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="SQL"
-      role="img"
+      aria-hidden="true"
     >
-      <ellipse cx="24" cy="10" rx="16" ry="6" stroke="currentColor" strokeWidth="3" />
+      <ellipse
+        cx="24"
+        cy="10"
+        rx="16"
+        ry="6"
+        stroke="currentColor"
+        strokeWidth="3"
+      />
+
       <path
         d="M8 10V37C8 40.3 15.2 43 24 43C32.8 43 40 40.3 40 37V10"
         stroke="currentColor"
         strokeWidth="3"
       />
+
       <path
         d="M8 23C8 26.3 15.2 29 24 29C32.8 29 40 26.3 40 23"
         stroke="currentColor"
@@ -102,76 +178,125 @@ function DatabaseIcon() {
   );
 }
 
-export default function Skills({ language }: { language: Language }) {
+export default function Skills({
+  language,
+}: {
+  language: Language;
+}) {
   const english = language === "en";
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section className="skills-section" id="skills">
       <div className="section-container">
-        <div className="skills-heading">
-          <span className="eyebrow">(02) {english ? "SKILLS" : "COMPETÊNCIAS"}</span>
 
-          <h2 className="section-title">
-            {english ? "From frontend to " : "Do frontend ao "}<em>backend.</em>
-          </h2>
+        {/* Section heading */}
 
-          <p className="skills-intro">
-            {english ? "Technologies and tools I have worked with throughout my journey." : "Tecnologias e ferramentas com que tenho trabalhado ao longo do meu percurso."}
-          </p>
-        </div>
+        <motion.div
+          className="skills-heading"
+          initial={shouldReduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.25 }}
+          variants={cardVariants}
+        >
+          <motion.span
+            className="eyebrow"
+            variants={itemVariants}
+          >
+            (02) {english ? "SKILLS" : "COMPETÊNCIAS"}
+          </motion.span>
+
+          <motion.h2
+            className="section-title"
+            variants={itemVariants}
+          >
+            {english ? "From frontend to " : "Do frontend ao "}
+            <em>backend.</em>
+          </motion.h2>
+
+          <motion.p
+            className="skills-intro"
+            variants={itemVariants}
+          >
+            {english
+              ? "Technologies and tools I have worked with throughout my journey."
+              : "Tecnologias e ferramentas com que tenho trabalhado ao longo do meu percurso."}
+          </motion.p>
+        </motion.div>
+
+        {/* Skills cards */}
 
         <motion.div
           className="skills-grid"
-          initial="hidden"
+          initial={shouldReduceMotion ? false : "hidden"}
           whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ staggerChildren: 0.15 }}
+          viewport={{
+            once: true,
+            amount: 0.15,
+          }}
+          variants={gridVariants}
         >
           {skills.map((skill) => (
             <motion.article
               className="skill-card"
-              key={skill.title}
+              key={skill.number}
               variants={cardVariants}
-              transition={{
-                duration: 0.65,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              whileHover={{
-                y: -9,
-                transition: { duration: 0.3 },
-              }}
+              whileHover={
+                shouldReduceMotion
+                  ? undefined
+                  : {
+                      y: -7,
+                      transition: { duration: 0.3 },
+                    }
+              }
             >
-              <div className="skill-card-top">
-                <span className="skill-icon">{skill.icon}</span>
-                <span className="skill-number">{skill.number}</span>
-              </div>
+              <motion.div
+                className="skill-card-top"
+                variants={itemVariants}
+              >
+                <span className="skill-icon">
+                  {skill.icon}
+                </span>
 
-              <h3>{skill.title}</h3>
-              <p>{skill.description}</p>
+                <span className="skill-number">
+                  {skill.number}
+                </span>
+              </motion.div>
 
-              <div className="skill-technologies">
-                {skill.technologies.map((tech, index) => (
+              <motion.h3 variants={itemVariants}>
+                {skill.title[language]}
+              </motion.h3>
+
+              <motion.p variants={itemVariants}>
+                {skill.description[language]}
+              </motion.p>
+
+              <motion.div
+                className="skill-technologies"
+                variants={gridVariants}
+              >
+                {skill.technologies.map((tech) => (
                   <motion.div
                     className="skill-technology"
                     key={tech.name}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{
-                      delay: index * 0.07 + 0.2,
-                      duration: 0.35,
-                    }}
-                    whileHover={{
-                      y: -5,
-                      scale: 1.06,
-                      transition: { duration: 0.2 },
-                    }}
+                    variants={technologyVariants}
+                    whileHover={
+                      shouldReduceMotion
+                        ? undefined
+                        : {
+                            y: -4,
+                            scale: 1.06,
+                            transition: { duration: 0.2 },
+                          }
+                    }
                   >
                     <div className="technology-logo">
                       {tech.logo ? (
                         <img
                           src={tech.logo}
-                          alt={`${tech.name} logo`}
+                          alt=""
                           loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <DatabaseIcon />
@@ -181,9 +306,12 @@ export default function Skills({ language }: { language: Language }) {
                     <span>{tech.name}</span>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
 
-              <div className="skill-card-decoration" />
+              <div
+                className="skill-card-decoration"
+                aria-hidden="true"
+              />
             </motion.article>
           ))}
         </motion.div>

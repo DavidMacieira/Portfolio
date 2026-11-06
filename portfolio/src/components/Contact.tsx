@@ -1,7 +1,8 @@
+
+import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import type { Language } from "../types";
 
-// Contactos
 const email = "davidfloresmacieira@gmail.com";
 const whatsappNumber = "351919241169";
 
@@ -10,16 +11,45 @@ const whatsappMessage = encodeURIComponent(
 );
 
 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-
-const linkedinUrl =
-  "https://www.linkedin.com/in/david-macieira-5791a2321/";
-
+const linkedinUrl = "https://www.linkedin.com/in/david-macieira-5791a2321/";
 const githubUrl = "https://github.com/DavidMacieira";
-
 const formspreeUrl = "https://formspree.io/f/mjyyadyz";
+
+type FormStatus = "idle" | "loading" | "success" | "error";
 
 export default function Contact({ language }: { language: Language }) {
   const english = language === "en";
+
+  const [formStatus, setFormStatus] = useState<FormStatus>("idle");
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    setFormStatus("loading");
+
+    try {
+      const response = await fetch(formspreeUrl, {
+        method: "POST",
+        body: new FormData(form),
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setFormStatus("success");
+        form.reset();
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
+  };
+
+  const currentYear = new Date().getFullYear();
+
   return (
     <section className="contact-section" id="contact">
       <motion.div
@@ -27,86 +57,101 @@ export default function Contact({ language }: { language: Language }) {
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.7 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="contact-content">
-          <header className="contact-header">
-            <span className="eyebrow">(05) {english ? "CONTACT" : "CONTACTO"}</span>
 
-            <h2>{english ? "Let's talk." : "Vamos falar."}</h2>
+          {/* Cabeçalho */}
+          <header className="contact-header">
+            <span className="eyebrow">
+              (05) {english ? "CONTACT" : "CONTACTO"}
+            </span>
+
+            <h2>
+              {english ? "Let's talk." : "Vamos falar."}
+            </h2>
 
             <p>
-              Estou disponível para oportunidades, colaborações
-              e novos desafios.
+              {english
+                ? "I'm open to professional opportunities, internships and projects where I can contribute, learn and continue to grow."
+                : "Estou disponível para oportunidades profissionais, estágios e projetos onde possa contribuir, aprender e continuar a evoluir."}
             </p>
           </header>
 
           <div className="contact-layout">
+
             {/* Informações de contacto */}
             <aside className="contact-details">
 
-              <div>
+              <div className="contact-detail-item">
                 <span className="contact-label">EMAIL</span>
 
-                <a href={`mailto:${email}`}>
-                  {email} <span>↗</span>
+                <a href={`mailto:${email}`} className="contact-detail-link">
+                  {email}
+                  <span className="contact-external">↗</span>
                 </a>
               </div>
 
-              <div>
+              <div className="contact-detail-item">
                 <span className="contact-label">WHATSAPP</span>
 
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="contact-detail-link"
                 >
-                  +351 919 241 169 <span>↗</span>
+                  +351 919 241 169
+                  <span className="contact-external">↗</span>
                 </a>
               </div>
 
               {/* Redes sociais */}
-              <div
-                className="contact-socials"
-                aria-label="Redes sociais"
-              >
-                <a
-                  className="contact-social-icon"
-                  href={githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fill="currentColor"
-                      d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.53v-2.05c-3.1.67-3.76-1.32-3.76-1.32-.5-1.29-1.24-1.63-1.24-1.63-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 1.71 2.62 1.22 3.26.93.1-.72.39-1.22.71-1.5-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.15a10.6 10.6 0 0 1 5.55 0c2.11-1.45 3.04-1.15 3.04-1.15.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.29-2.61 5.23-5.1 5.51.4.35.76 1.03.76 2.08V22c0 .29.2.64.77.53A11.1 11.1 0 0 0 12 .9Z"
-                    />
-                  </svg>
-                </a>
+              <div className="contact-socials">
+                <span className="contact-label">
+                  {english ? "FIND ME ON" : "ENCONTRA-ME EM"}
+                </span>
 
-                <a
-                  className="contact-social-icon"
-                  href={linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fill="currentColor"
-                      d="M20.45 2H3.55A1.55 1.55 0 0 0 2 3.55v16.9A1.55 1.55 0 0 0 3.55 22h16.9A1.55 1.55 0 0 0 22 20.45V3.55A1.55 1.55 0 0 0 20.45 2ZM8 18H5V9h3ZM6.5 7.73a1.74 1.74 0 1 1 0-3.48 1.74 1.74 0 0 1 0 3.48ZM19 18h-3v-4.38c0-1.05-.02-2.4-1.46-2.4-1.46 0-1.69 1.14-1.69 2.32V18h-3V9h2.88v1.23h.04a3.16 3.16 0 0 1 2.84-1.56C18.65 8.67 19 10.59 19 13.08Z"
-                    />
-                  </svg>
-                </a>
+                <div className="contact-social-links">
+
+                  <a
+                    className="contact-social-icon"
+                    href={githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fill="currentColor"
+                        d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.53v-2.05c-3.1.67-3.76-1.32-3.76-1.32-.5-1.29-1.24-1.63-1.24-1.63-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 1.71 2.62 1.22 3.26.93.1-.72.39-1.22.71-1.5-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.15a10.6 10.6 0 0 1 5.55 0c2.11-1.45 3.04-1.15 3.04-1.15.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.29-2.61 5.23-5.1 5.51.4.35.76 1.03.76 2.08V22c0 .29.2.64.77.53A11.1 11.1 0 0 0 12 .9Z"
+                      />
+                    </svg>
+                  </a>
+
+                  <a
+                    className="contact-social-icon"
+                    href={linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fill="currentColor"
+                        d="M20.45 2H3.55A1.55 1.55 0 0 0 2 3.55v16.9A1.55 1.55 0 0 0 3.55 22h16.9A1.55 1.55 0 0 0 22 20.45V3.55A1.55 1.55 0 0 0 20.45 2ZM8 18H5V9h3ZM6.5 7.73a1.74 1.74 0 1 1 0-3.48 1.74 1.74 0 0 1 0 3.48ZM19 18h-3v-4.38c0-1.05-.02-2.4-1.46-2.4-1.46 0-1.69 1.14-1.69 2.32V18h-3V9h2.88v1.23h.04a3.16 3.16 0 0 1 2.84-1.56C18.65 8.67 19 10.59 19 13.08Z"
+                      />
+                    </svg>
+                  </a>
+
+                </div>
               </div>
             </aside>
 
-            {/* Formulário de contacto */}
+            {/* Formulário */}
             <form
               className="contact-form"
-              action={formspreeUrl}
-              method="POST"
+              onSubmit={handleSubmit}
             >
               <input
                 type="hidden"
@@ -115,32 +160,35 @@ export default function Contact({ language }: { language: Language }) {
               />
 
               <label>
-                <span>Nome</span>
+                <span>{english ? "Name" : "Nome"}</span>
 
                 <input
                   name="name"
                   type="text"
-                  placeholder="O teu nome"
+                  placeholder={english ? "Your name" : "O teu nome"}
                   autoComplete="name"
                   required
+                  disabled={formStatus === "loading"}
                 />
               </label>
 
               <label>
-                <span>Email</span>
+                <span>{english ? "Email" : "Email"}</span>
 
                 <input
                   name="email"
                   type="email"
-                  placeholder="nome@empresa.com"
+                  placeholder="name@company.com"
                   autoComplete="email"
                   required
+                  disabled={formStatus === "loading"}
                 />
               </label>
 
               <label>
                 <span>
-                  Telefone <i>(opcional)</i>
+                  {english ? "Phone" : "Telefone"}
+                  <i> ({english ? "optional" : "opcional"})</i>
                 </span>
 
                 <input
@@ -148,21 +196,63 @@ export default function Contact({ language }: { language: Language }) {
                   type="tel"
                   placeholder="+351 ..."
                   autoComplete="tel"
+                  disabled={formStatus === "loading"}
                 />
               </label>
 
               <label className="contact-form-message">
-                <span>Mensagem</span>
+                <span>{english ? "Message" : "Mensagem"}</span>
 
                 <textarea
                   name="message"
-                  placeholder="Conta-me um pouco sobre o teu projeto ou oportunidade."
+                  placeholder={
+                    english
+                      ? "Tell me a little about your project or opportunity."
+                      : "Conta-me um pouco sobre o teu projeto ou oportunidade."
+                  }
                   required
+                  disabled={formStatus === "loading"}
                 />
               </label>
 
-              <button type="submit">
-                Enviar mensagem <span>↗</span>
+              {/* Feedback */}
+              <div
+                className="contact-form-feedback"
+                aria-live="polite"
+                role="status"
+              >
+                {formStatus === "success" && (
+                  <p className="form-success">
+                    {english
+                      ? "Message sent successfully. Thank you for getting in touch!"
+                      : "Mensagem enviada com sucesso. Obrigado pelo contacto!"}
+                  </p>
+                )}
+
+                {formStatus === "error" && (
+                  <p className="form-error">
+                    {english
+                      ? "Something went wrong. Please try again."
+                      : "Ocorreu um erro. Por favor, tenta novamente."}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={formStatus === "loading"}
+              >
+                {formStatus === "loading"
+                  ? english
+                    ? "Sending..."
+                    : "A enviar..."
+                  : english
+                    ? "Send message"
+                    : "Enviar mensagem"}
+
+                <span>
+                  {formStatus === "loading" ? "..." : "↗"}
+                </span>
               </button>
             </form>
           </div>
@@ -170,10 +260,15 @@ export default function Contact({ language }: { language: Language }) {
 
         {/* Footer */}
         <footer className="contact-card-footer">
-          <span>© 2026 DAVID MACIEIRA</span>
+          <span>© {currentYear} DAVID MACIEIRA</span>
+
+          <span className="contact-footer-role">
+            {english ? "SOFTWARE DEVELOPER" : "DESENVOLVEDOR DE SOFTWARE"}
+          </span>
 
           <a href="#home">
-            VOLTAR AO TOPO <span>↑</span>
+            {english ? "BACK TO TOP" : "VOLTAR AO TOPO"}
+            <span>↑</span>
           </a>
         </footer>
       </motion.div>
