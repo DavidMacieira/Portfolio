@@ -1,1 +1,137 @@
-:root{font-family:"DM Sans",sans-serif;color:#f7f4ee;background:#101111;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;--ink:#101111;--surface:#181a1a;--surface-raised:#202323;--paper:#f7f4ee;--muted:#aaa9a3;--line:rgba(247,244,238,.14);--accent:#d7ff3f;--accent-ink:#172000;--display:"Playfair Display",Georgia,serif}*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}body{min-width:320px;background:var(--ink)}a{color:inherit;text-decoration:none}button{font:inherit}section{scroll-margin-top:24px}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:.69rem;font-weight:700;letter-spacing:.14em}.eyebrow:before{content:"";width:22px;height:1px;background:currentColor}em{font-family:var(--display);font-weight:500}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+:root {
+  font-family: "DM Sans", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  /* =====================================
+     DARK THEME
+  ===================================== */
+
+  color-scheme: dark;
+
+  --ink: #101416;
+  --surface: #181e20;
+  --surface-raised: #222b2e;
+
+  --paper: #f4f5f2;
+  --muted: #a5b0b2;
+
+  --line: rgba(244, 245, 242, 0.14);
+
+  --accent: #d7ff3f;
+  --accent-ink: #172000;
+
+  --display: "Playfair Display", Georgia, serif;
+
+  /* Cores adicionais */
+  --input-bg: #191f21;
+  --contact-bg: #202729;
+  --card-bg: rgba(255, 255, 255, 0.035);
+  --nav-bg: rgba(255, 255, 255, 0.04);
+  --shadow: rgba(0, 0, 0, 0.2);
+  --glow: rgba(215, 255, 63, 0.13);
+  --image-shadow: rgba(0, 0, 0, 0.32);
+}
+
+/* =====================================
+   LIGHT THEME
+===================================== */
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --ink: #f5f6f4;
+  --surface: #eaf0f1;
+  --surface-raised: #ffffff;
+
+  --paper: #172326;
+  --muted: #657579;
+
+  --line: rgba(20, 45, 53, 0.14);
+
+  --accent: #285e6b;
+  --accent-ink: #ffffff;
+
+  /* Cores adicionais */
+  --input-bg: #ffffff;
+  --contact-bg: #e8edef;
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --nav-bg: rgba(20, 45, 53, 0.045);
+  --shadow: rgba(40, 60, 65, 0.08);
+  --glow: rgba(77, 157, 179, 0.12);
+  --image-shadow: rgba(40, 60, 65, 0.12);
+}
+
+/* =====================================
+   GLOBAL STYLES
+===================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ink);
+}
+
+body {
+  min-width: 320px;
+  background: var(--ink);
+  color: var(--paper);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+section {
+  scroll-margin-top: 24px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.eyebrow:before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+}
+
+em {
+  font-family: var(--display);
+  font-weight: 500;
+}
+
+/* =====================================
+   ACCESSIBILITY
+===================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

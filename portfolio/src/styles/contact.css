@@ -5,14 +5,14 @@
 
 .contact-section {
   padding: 0;
-  background: #252727;
+  background: var(--contact-bg);
 }
 
 .contact-card {
   position: relative;
   min-height: 700px;
   overflow: hidden;
-  background: #252727;
+  background: var(--contact-bg);
 }
 
 /* ========================================
@@ -43,7 +43,7 @@
 
 .contact-header p {
   max-width: 470px;
-  color: #c2c3bd;
+  color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.75;
 }
@@ -78,12 +78,11 @@
 .contact-label {
   display: block;
   margin-bottom: 11px;
-  color: #999b95;
+  color: var(--muted);
   font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.14em;
 }
-
 .contact-detail-link {
   display: inline-flex;
   align-items: center;
@@ -126,7 +125,7 @@
   place-items: center;
   width: 43px;
   height: 43px;
-  border: 1px solid rgba(247, 244, 238, 0.18);
+  border: 1px solid var(--line);
   border-radius: 50%;
   color: var(--paper);
   transition:
@@ -167,7 +166,7 @@
 .contact-form label > span {
   display: block;
   margin-bottom: 9px;
-  color: #b4b5ae;
+  color: var(--muted);
   font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.11em;
@@ -184,10 +183,10 @@
 .contact-form textarea {
   display: block;
   width: 100%;
-  border: 1px solid rgba(247, 244, 238, 0.07);
+  border: 1px solid var(--line);
   border-radius: 3px;
   outline: none;
-  background: #191b1b;
+  background: var(--input-bg);
   color: var(--paper);
   padding: 16px;
   font-family: inherit;
@@ -210,14 +209,15 @@
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-  color: #777a75;
+  color: var(--muted);
 }
+
 
 .contact-form input:focus,
 .contact-form textarea:focus {
   border-color: var(--accent);
-  background: #151717;
-  box-shadow: 0 0 0 3px rgba(215, 255, 63, 0.07);
+  background: var(--input-bg);
+  box-shadow: 0 0 0 3px var(--glow);
 }
 
 .contact-form input:disabled,
@@ -285,6 +285,7 @@
   transform: translateY(-3px);
   border-color: var(--paper);
   background: var(--paper);
+  color: var(--ink);
 }
 
 .contact-form button:disabled {
@@ -308,8 +309,8 @@
   max-width: 1440px;
   margin: 0 auto;
   padding: 22px clamp(26px, 9vw, 150px);
-  border-top: 1px solid rgba(247, 244, 238, 0.14);
-  color: #999b95;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.1em;

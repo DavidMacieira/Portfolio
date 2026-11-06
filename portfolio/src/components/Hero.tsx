@@ -1,8 +1,10 @@
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import heroImage from "../assets/hero.png";
 import type { Language } from "../types";
 
+type Theme = "dark" | "light";
 
 const textVariants = {
   hidden: { opacity: 0, y: 25 },
@@ -23,12 +25,81 @@ const itemVariants = {
 };
 
 function ArrowIcon() {
-  return <svg className="button-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>;
+  return (
+    <svg className="button-arrow" viewBox="0 0 16 16" aria-hidden="true">
+      <path
+        d="M3 8h9M8.5 3.5 13 8l-4.5 4.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
 }
 
-export default function Hero({ language, setLanguage }: { language: Language; setLanguage: (language: Language) => void }) {
+function ThemeIcon({ theme }: { theme: Theme }) {
+  if (theme === "dark") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle
+          cx="12"
+          cy="12"
+          r="4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.7"
+        />
+        <path
+          d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.7"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M20.2 15.3A8.5 8.5 0 0 1 8.7 3.8 8.5 8.5 0 1 0 20.2 15.3Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export default function Hero({
+  language,
+  setLanguage,
+}: {
+  language: Language;
+  setLanguage: (language: Language) => void;
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Recuperar a preferência guardada
+  const [theme, setTheme] = useState<Theme>(() => {
+    const savedTheme = localStorage.getItem("portfolio-theme");
+    return savedTheme === "light" ? "light" : "dark";
+  });
+
   const english = language === "en";
+
+  // Aplicar e guardar o tema
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("portfolio-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((current) => (current === "dark" ? "light" : "dark"));
+  };
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -51,7 +122,11 @@ export default function Hero({ language, setLanguage }: { language: Language; se
         </a>
 
         <div className="nav-links">
-          {links.map((link) => <a href={link.href} key={link.number}>{link.label}</a>)}
+          {links.map((link) => (
+            <a href={link.href} key={link.number}>
+              {link.label}
+            </a>
+          ))}
         </div>
 
         <div className="nav-actions">
@@ -87,9 +162,42 @@ export default function Hero({ language, setLanguage }: { language: Language; se
           <a href="#contact" className="nav-contact">
             {english ? "Let's talk" : "Vamos conversar"} <ArrowIcon />
           </a>
-          <div className="language-switcher" aria-label="Language">
-            <button className={language === "pt" ? "active" : ""} onClick={() => setLanguage("pt")}>PT</button>
-            <button className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")}>EN</button>
+
+          <div className="header-preferences">
+            <div className="language-switcher" aria-label="Language">
+              <button
+                className={language === "pt" ? "active" : ""}
+                onClick={() => setLanguage("pt")}
+                aria-pressed={language === "pt"}
+              >
+                PT
+              </button>
+              <button
+                className={language === "en" ? "active" : ""}
+                onClick={() => setLanguage("en")}
+                aria-pressed={language === "en"}
+              >
+                EN
+              </button>
+            </div>
+
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={
+                theme === "dark"
+                  ? english
+                    ? "Switch to light mode"
+                    : "Ativar modo claro"
+                  : english
+                    ? "Switch to dark mode"
+                    : "Ativar modo escuro"
+              }
+              title={theme === "dark" ? "Light mode" : "Dark mode"}
+            >
+              <ThemeIcon theme={theme} />
+            </button>
           </div>
         </div>
 
@@ -97,7 +205,11 @@ export default function Hero({ language, setLanguage }: { language: Language; se
           type="button"
           className={`mobile-menu-button ${menuOpen ? "active" : ""}`}
           onClick={() => setMenuOpen((previous) => !previous)}
-          aria-label={menuOpen ? (english ? "Close menu" : "Fechar menu") : (english ? "Open menu" : "Abrir menu")}
+          aria-label={
+            menuOpen
+              ? english ? "Close menu" : "Fechar menu"
+              : english ? "Open menu" : "Abrir menu"
+          }
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
         >
@@ -112,7 +224,7 @@ export default function Hero({ language, setLanguage }: { language: Language; se
             <motion.button
               type="button"
               className="mobile-menu-backdrop"
-              aria-label="Fechar menu"
+              aria-label={english ? "Close menu" : "Fechar menu"}
               onClick={closeMenu}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -128,17 +240,13 @@ export default function Hero({ language, setLanguage }: { language: Language; se
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <div className="mobile-menu-heading">
-                <span>{english ? "MENU" : "MENU"}</span>
+                <span>MENU</span>
                 <span>01 — 04</span>
               </div>
 
               <div className="mobile-menu-links">
                 {links.map((link) => (
-                  <a
-                    href={link.href}
-                    onClick={closeMenu}
-                    key={link.number}
-                  >
+                  <a href={link.href} onClick={closeMenu} key={link.number}>
                     <span>{link.number}</span>
                     {link.label}
                     <ArrowIcon />
@@ -181,43 +289,28 @@ export default function Hero({ language, setLanguage }: { language: Language; se
           initial="hidden"
           animate="visible"
         >
-          <motion.div
-            className="hero-redesign-line"
-            variants={itemVariants}
-          />
+          <motion.div className="hero-redesign-line" variants={itemVariants} />
 
           <motion.h1 variants={itemVariants}>
             {english ? "I turn ideas into" : "Transformo ideias em"}
             <br />
-            <em>{english ? "digital experiences." : "experiências digitais."}</em>
+            <em>
+              {english ? "digital experiences." : "experiências digitais."}
+            </em>
           </motion.h1>
 
+          <motion.p className="hero-description" variants={itemVariants}>
+            {english
+              ? "I'm David, a Web Development and Multimedia student passionate about technology and digital creation. I enjoy turning ideas into functional solutions, developing websites and applications from concept to implementation."
+              : "Sou o David, estudante de Desenvolvimento Web e Multimédia, apaixonado por tecnologia e criação digital. Gosto de transformar ideias em soluções funcionais, desenvolvendo websites e aplicações desde a conceção até à implementação."}
+          </motion.p>
 
-<motion.p
-  className="hero-description"
-  variants={itemVariants}
->
-  {english
-    ? "I'm David, a Web Development and Multimedia student passionate about technology and digital creation. I enjoy turning ideas into functional solutions, developing websites and applications from concept to implementation."
-    : "Sou o David, estudante de Desenvolvimento Web e Multimédia, apaixonado por tecnologia e criação digital. Gosto de transformar ideias em soluções funcionais, desenvolvendo websites e aplicações desde a conceção até à implementação."}
-</motion.p>
-
-
-          <motion.div
-            className="hero-actions"
-            variants={itemVariants}
-          >
-            <a
-              href="#projects"
-              className="button-primary hero-redesign-button"
-            >
+          <motion.div className="hero-actions" variants={itemVariants}>
+            <a href="#projects" className="button-primary hero-redesign-button">
               {english ? "View projects" : "Ver projetos"} <ArrowIcon />
             </a>
 
-            <a
-              href="#contact"
-              className="button-outline hero-redesign-button"
-            >
+            <a href="#contact" className="button-outline hero-redesign-button">
               {english ? "Get in touch" : "Contactar"} <ArrowIcon />
             </a>
           </motion.div>
@@ -230,7 +323,9 @@ export default function Hero({ language, setLanguage }: { language: Language; se
             <span className="hero-scroll-mouse">
               <i />
             </span>
-            <span>{english ? "SCROLL TO EXPLORE" : "SCROLL PARA EXPLORAR"}</span>
+            <span>
+              {english ? "SCROLL TO EXPLORE" : "SCROLL PARA EXPLORAR"}
+            </span>
           </motion.a>
         </motion.div>
 
@@ -256,5 +351,3 @@ export default function Hero({ language, setLanguage }: { language: Language; se
     </section>
   );
 }
-
-
